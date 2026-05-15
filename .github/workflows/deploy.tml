@@ -1,0 +1,35 @@
+name: Deploy Vingaard Site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/vingaard-site/AI_OD_Model_Django_Blazor
+
+            git fetch origin
+            git reset --hard origin/main
+
+            cd frontend/WebAppFrontend.Wasm
+
+            docker build -t vingaard-blazor .
+
+            docker rm -f vingaard-site || true
+
+            docker run -d \
+              --name vingaard-site \
+              -p 8080:80 \
+              --restart always \
+              vingaard-blazor
