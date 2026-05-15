@@ -1,0 +1,90 @@
+@page "/classifier"
+@using Microsoft.AspNetCore.Components.Forms
+@using WebAppFrontend.Wasm.Models;
+@inject WebAppFrontend.Wasm.Services.PredictionClient PredictionClient;
+
+<PageTitle>AI model - Object detection</PageTitle>
+
+<h3>AI model - Object detection</h3>
+
+<InputFile OnChange="OnFileSelected" />
+
+@if (!string.IsNullOrEmpty(_imagePreview))
+{
+    <img src="@_imagePreview"
+         style="max-width:300px; max-height:300px; object-fit:contain; border:1px solid #ccc; margin:10px 0;" />
+}
+
+@if (!string.IsNullOrWhiteSpace(_error))
+{
+    <pre>@_error</pre>
+}
+
+@if (_isLoading)
+{
+    <p>Analyzing...</p>
+}
+else if (_result != null)
+{
+    <h4>Result</h4>
+    <p><b>File:</b> @_result.Filename</p>
+    <p><b>Prediction:</b> @_result.Label @double.Round((_result.Confidence * 100), 2)%</p>
+
+    <h5>Probabilities</h5>
+    @if (_result.AllProbs is null || _result.AllProbs.Count == 0)
+{
+    <p><i>No probability breakdown returned from API.</i></p>
+}
+else
+{
+    <ul>
+        @foreach (var kv in _result.AllProbs.OrderByDescending(x => x.Value))
+        {
+            <li><b>@kv.Key:</b> @float.Round((kv.Value * 100),2)%</li>
+        }
+    </ul>
+    }
+}
+else
+{
+    <p>Upload an image to test the model.</p>
+}
+
+@code {
+    private PredictionResponse? _result;
+    private bool _isLoading;
+    private string? _error;
+    private string? _imagePreview;
+
+    
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+{
+    var file = e.File;
+    if (file is null) return;
+
+    _isLoading = true;
+    _result = null;
+    _error = null;
+
+    try
+    {
+        
+        using var previewStream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024);
+        var buffer = new byte[file.Size];
+        await previewStream.ReadAsync(buffer);
+        _imagePreview = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+
+        
+        await using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024);
+        _result = await PredictionClient.PredictAsync(stream, file.Name, file.ContentType);
+    }
+    catch (Exception ex)
+    {
+        _error = ex.ToString();
+    }
+    finally
+    {
+        _isLoading = false;
+    }
+    }
+}
