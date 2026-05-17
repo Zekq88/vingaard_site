@@ -1,7 +1,7 @@
 services:
   frontend:
     build:
-      context: .frontend/WebAppFrontend.Wasm
+      context: ./frontend/WebAppFrontend.Wasm
     container_name: vingaard-frontend
     restart: always
     ports:
