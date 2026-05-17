@@ -73,44 +73,80 @@ a, .btn-link {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    color: #111827;
+
+    background:
+        radial-gradient(circle at top left, rgba(52, 211, 153, 0.22), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.20), transparent 34%),
+        linear-gradient(135deg, #050816 0%, #0f172a 55%, #111827 100%);
+
+    color: white;
     font-family: Arial, sans-serif;
-    animation: fadeIn 0.8s ease-in-out;
+    overflow: hidden;
+    animation: loaderFadeIn 1.2s ease-out;
 }
 
 .loader-brand {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    animation: slideUp 1.1s ease-out;
 }
 
 .loader-subtitle {
-    margin-top: 0.75rem;
+    margin-top: 0.8rem;
     font-size: 1rem;
-    color: #555;
+    color: rgba(255,255,255,0.72);
+    animation: slideUp 1.4s ease-out;
 }
 
 .loader-pulse {
-    margin-top: 2rem;
-    width: 42px;
-    height: 42px;
+    margin-top: 2.2rem;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    border: 3px solid #ddd;
-    border-top-color: #111827;
-    animation: spin 1s linear infinite;
+    border: 2px solid rgba(255,255,255,0.18);
+    border-top-color: #34d399;
+    border-right-color: #60a5fa;
+    animation: spin 1.1s linear infinite, glow 2s ease-in-out infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
+    to { transform: rotate(360deg); }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 18px rgba(52, 211, 153, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 34px rgba(96, 165, 250, 0.45);
     }
 }
 
-@keyframes fadeIn {
+@keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loaderFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body {
+    animation: pageFadeIn 1.4s ease-in-out;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
     }
     to {
         opacity: 1;
@@ -129,17 +165,4 @@ code {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
-}
-
-body {
-    animation: pageFadeIn 0.6s ease-in-out;
-}
-
-@keyframes pageFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
 }
