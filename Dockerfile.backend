@@ -1,0 +1,15 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY req.txt .
+
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r req.text
+RUN pip install --no-cache-dir gunicorn
+
+COPY . .
+
+EXPOSE 8000
+
+CMD [ "gunicorn", "ai_backend.wsgi:application", "--bind", "0.0.0.0:8000" ]
