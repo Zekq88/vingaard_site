@@ -7,7 +7,7 @@ namespace WebAppFrontend.Wasm.Services;
 public class PredictionClient
 {
     private readonly HttpClient _http;
-    private const string ApiUrl = "/api/predict/";
+    private const string ApiUrl = "api/predict";
 
     public PredictionClient(HttpClient http) => _http = http;
     
