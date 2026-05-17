@@ -22,18 +22,14 @@ jobs:
             git fetch origin
             git reset --hard origin/main
 
-            cd frontend/WebAppFrontend.Wasm
+            docker-compose down --remove-orphans
 
-            docker build -t vingaard-blazor .
+            docker rm -f vingaard-backend vingaard-frontend vingaard-site 2>/dev/null || true
 
-            docker rm -f vingaard-site || true
+            docker-compose build --no-cache
 
-            docker run -d \
-              --name vingaard-site \
-              -p 8080:80 \
-              --restart always \
-              vingaard-blazor
+            docker-compose up -d --force-recreate
 
-            docker image prune -f
-            docker builder prune -f
+            docker image prune -af
+            docker builder prune -af
             docker container prune -f
