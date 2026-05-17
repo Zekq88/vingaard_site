@@ -33,3 +33,7 @@ jobs:
               -p 8080:80 \
               --restart always \
               vingaard-blazor
+
+            docker image prune -f
+            docker builder prune -f
+            docker container prune -f
