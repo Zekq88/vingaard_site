@@ -8,13 +8,13 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-  
+
     permissions:
       contents: read
       packages: write
 
     steps:
-      - name: Cheackout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Login to GHCR
@@ -23,17 +23,18 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
+
       - name: Build frontend image
         run: |
           docker build \
-          -t ghcr.io/zekq88/vingaard-frontend:latest \
-          ./frontned/WebAppFrontend.Wasm
+            -t ghcr.io/zekq88/vingaard-frontend:latest \
+            ./frontend/WebAppFrontend.Wasm
 
       - name: Build backend image
         run: |
           docker build \
-          -t ghcr.io/zekq88/vingaard-backend:latest \
-          -f Dockerfile.backend .
+            -t ghcr.io/zekq88/vingaard-backend:latest \
+            -f Dockerfile.backend .
 
       - name: Push frontend image
         run: docker push ghcr.io/zekq88/vingaard-frontend:latest
@@ -52,11 +53,13 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          
           script: |
             docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
 
             cd ~/vingaard-site/AI_OD_Model_Django_Blazor
+
+            git fetch origin
+            git reset --hard origin/main
 
             docker-compose down --remove-orphans
 
@@ -65,6 +68,6 @@ jobs:
 
             docker-compose up -d --force-recreate
 
-            docker image prune -af
+            docker image prune -f
             docker builder prune -f
             docker container prune -f
