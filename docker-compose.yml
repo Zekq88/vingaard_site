@@ -1,7 +1,6 @@
 services:
   frontend:
-    build:
-      context: ./frontend/WebAppFrontend.Wasm
+    image: ghcr.io./zekq88/vingaard-frontend:latest
     container_name: vingaard-frontend
     restart: always
     ports:
@@ -13,9 +12,7 @@ services:
         max-file: "3"
 
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
+    image: ghcr.io/zekq88/vingaard-backend:latest
     container_name: vingaard-backend
     restart: always
     ports:
