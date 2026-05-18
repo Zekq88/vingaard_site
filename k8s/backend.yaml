@@ -12,6 +12,8 @@ spec:
       labels:
         app: vingaard-backend
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: backend
           image: ghcr.io/zekq88/vingaard-backend:latest
