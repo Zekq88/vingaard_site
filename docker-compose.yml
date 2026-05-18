@@ -11,6 +11,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
+
   backend:
     image: ghcr.io/zekq88/vingaard-backend:latest
     container_name: vingaard-backend
