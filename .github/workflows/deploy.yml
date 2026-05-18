@@ -58,10 +58,6 @@ jobs:
 
             cd ~/vingaard-site/AI_OD_Model_Django_Blazor
 
-
-            git fetch origin
-            git reset --hard origin/main
-
             docker-compose down --remove-orphans
 
             docker pull ghcr.io/zekq88/vingaard-frontend:latest
