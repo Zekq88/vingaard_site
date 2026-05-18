@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: ghcr.io./zekq88/vingaard-frontend:latest
+    image: ghcr.io/zekq88/vingaard-frontend:latest
     container_name: vingaard-frontend
     restart: always
     ports:
