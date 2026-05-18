@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vingaard-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vingaard-backend
+  template:
+    metadata:
+      labels:
+        app: vingaard-backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/zekq88/vingaard-backend:latest
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vingaard-backend-service
+spec:
+  selector:
+    app: vingaard-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
