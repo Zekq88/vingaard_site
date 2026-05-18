@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Cheackout repository
-        uses: actions/Checkout@v4
+        uses: actions/checkout@v4
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -27,7 +27,7 @@ jobs:
         run: |
           docker build \
           -t ghcr.io/zekq88/vingaard-frontend:latest \
-          ./frontned/WebAppFrontend-Wasm
+          ./frontned/WebAppFrontend.Wasm
 
       - name: Build backend image
         run: |
