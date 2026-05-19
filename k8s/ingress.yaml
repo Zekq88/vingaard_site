@@ -6,7 +6,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec: 
   rules:
-    - host: vingaard-solutions.eu
+    - host: www.vingaard-solutions.eu
       http:
         paths:
         - path: /api/predict
