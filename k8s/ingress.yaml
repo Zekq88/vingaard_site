@@ -1,19 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: vingaard-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
     cert-manager.io/cluster-issuer: letsencrypt-prod
-spec: 
-    tls:
-    - hosts: 
+
+spec:
+  tls:
+    - hosts:
         - vingaard-solutions.eu
         - www.vingaard-solutions.eu
       secretName: vingaard-tls
-    rules:
+
+  rules:
+
+    - host: vingaard-solutions.eu
       http:
         paths:
+
           - path: /api/predict
             pathType: Prefix
             backend:
@@ -37,30 +43,31 @@ spec:
                 name: vingaard-frontend-service
                 port:
                   number: 80
-                    
-          - host: www.vingaard-solutions.eu
-            http:
-              paths:
-              - path: /api/predict
-                pathType: Prefix
-                backend:
-                  service:
-                    name: vingaard-backend-service
-                    port:
-                      number: 8000
 
-              - path: /api
-                pathType: Prefix
-                backend:
-                  service:
-                    name: vingaard-backend-service
-                    port:
-                      number: 8000
-              
-              - path: /
-                pathType: Prefix
-                backend:
-                  service:
-                    name: vingaard-frontend-service
-                    port:
-                      number: 80
+    - host: www.vingaard-solutions.eu
+      http:
+        paths:
+
+          - path: /api/predict
+            pathType: Prefix
+            backend:
+              service:
+                name: vingaard-backend-service
+                port:
+                  number: 8000
+
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: vingaard-backend-service
+                port:
+                  number: 8000
+
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vingaard-frontend-service
+                port:
+                  number: 80
