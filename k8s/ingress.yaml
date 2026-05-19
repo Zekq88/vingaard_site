@@ -9,18 +9,26 @@ spec:
     - host: vingaard-solutions.eu
       http:
         paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: vingaard-frontend-service
-                port:
-                  number: 80
-          
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: vingaard-backtend-service
-                port:
-                  number: 8000
+        - path: /api/predict
+          pathType: Prefix
+          backend:
+            service:
+              name: vingaard-backend-service
+              port:
+                number: 8000
+
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: vingaard-backend-service
+              port:
+                number: 8000
+        
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: vingaard-frontend-service
+              port:
+                number: 80
