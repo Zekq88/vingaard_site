@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vingaard-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.clusterIssuer | quote }}
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
+
+spec:
+  tls:
+    - hosts:
+{{ toYaml .Values.ingress.hosts | indent 8 }}
+      secretName: {{ .Values.ingress.tlsSecretName | quote }}
+
+  rules:
+{{- range .Values.ingress.hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /api/predict
+            pathType: Prefix
+            backend:
+              service:
+                name: vingaard-backend-service
+                port:
+                  number: {{ $.Values.backend.port }}
+
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: vingaard-backend-service
+                port:
+                  number: {{ $.Values.backend.port }}
+
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vingaard-frontend-service
+                port:
+                  number: {{ $.Values.frontend.port }}
+{{- end }}

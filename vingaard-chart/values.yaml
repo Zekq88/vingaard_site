@@ -1,0 +1,17 @@
+frontend:
+  image: ghcr.io/zekq88/vingaard-frontend:latest
+  replicas: 1
+  port: 80
+
+backend:
+  image: ghcr.io/zekq88/vingaard-backend:latest
+  replicas: 1
+  port: 8000
+
+ingress:
+  enable: true
+  hosts:
+    - vingaard-solutions.eu
+    - www.vingaard-solutions.eu
+  tlsSecretName: vingaard-tls
+  clusterIssuer: letsencrypt-prod 
