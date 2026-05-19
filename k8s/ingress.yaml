@@ -3,11 +3,15 @@ kind: Ingress
 metadata:
   name: vingaard-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec: 
-  rules:
-    - host: vingaard-solutions.eu
-      http:
+    tls:
+    - hosts: 
+        - vingaard-solutions.eu
+        - www.vingaard-solutions.eu
+      secretName: vingaard-tls
+      rules:
         paths:
           - path: /api/predict
             pathType: Prefix
