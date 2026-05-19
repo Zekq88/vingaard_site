@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vingaard-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec: 
+  rules:
+    - host: vingaard-solutions.eu
+      http:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: vingaard-frontend-service
+              port:
+                number: 80
+        
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: vingaard-backtend-service
+              port:
+                number: 8000
