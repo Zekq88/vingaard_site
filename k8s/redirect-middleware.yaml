@@ -1,0 +1,10 @@
+apiVersion: traefik.io/vlalpha1
+kind: Middleware
+
+metadata:
+  name: redirect-https
+
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
