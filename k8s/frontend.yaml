@@ -23,7 +23,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: frontend
-          image: ghcr.io/zekq88/vingaard-frontend:latest
+          image: ghcr.io/zekq88/vingaard-frontend:${{ github.sha }}
           ports:
             - containerPort: 80
 ---

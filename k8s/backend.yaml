@@ -23,7 +23,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: backend
-          image: ghcr.io/zekq88/vingaard-backend:latest
+          image: ghcr.io/zekq88/vingaard-backend:${{ github.sha }}
           ports:
             - containerPort: 8000
 ---

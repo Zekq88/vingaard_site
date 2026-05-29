@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: ghcr.io/zekq88/vingaard-frontend:latest
+    image: ghcr.io/zekq88/vingaard-frontend:${{ github.sha }}
     container_name: vingaard-frontend
     restart: always
     ports:
@@ -13,7 +13,7 @@ services:
 
 
   backend:
-    image: ghcr.io/zekq88/vingaard-backend:latest
+    image: ghcr.io/zekq88/vingaard-backend:${{ github.sha }}
     container_name: vingaard-backend
     restart: always
     ports:
