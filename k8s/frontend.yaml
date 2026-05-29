@@ -4,6 +4,13 @@ metadata:
   name: vingaard-frontend
 spec:
   replicas: 1
+  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailible: 0
+      maxSurge: 1
+
   selector:
     matchLabels:
       app: vingaard-frontend
