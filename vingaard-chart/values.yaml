@@ -5,7 +5,7 @@ frontend:
 
 backend:
   image: ghcr.io/zekq88/vingaard-backend:e04421cf76cdbd2f0cb04abc5e1b1a111f2952f2
-  replicas: 1
+  replicas: 2
   port: 8000
 
 ingress:
