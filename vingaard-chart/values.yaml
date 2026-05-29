@@ -1,10 +1,10 @@
 frontend:
-  image: ghcr.io/zekq88/vingaard-frontend:e04421cf76cdbd2f0cb04abc5e1b1a111f2952f2
+  image: ghcr.io/zekq88/vingaard-frontend:17d49d7f2ffe6f5f2f1e33e0e385c514a8346cfe
   replicas: 2
   port: 80
 
 backend:
-  image: ghcr.io/zekq88/vingaard-backend:e04421cf76cdbd2f0cb04abc5e1b1a111f2952f2
+  image: ghcr.io/zekq88/vingaard-backend:17d49d7f2ffe6f5f2f1e33e0e385c514a8346cfe
   replicas: 2
   port: 8000
 
