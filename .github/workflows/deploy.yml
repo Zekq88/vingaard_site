@@ -1,58 +1,58 @@
 name: Deploy Vingaard Site
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
-build-push-update-helm:
-runs-on: ubuntu-latest
+  build-push-update-helm:
+    runs-on: ubuntu-latest
 
-```
-permissions:
-  contents: write
-  packages: write
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    permissions:
+      contents: write
+      packages: write
 
-  - name: Login to GHCR
-    uses: docker/login-action@v3
-    with:
-      registry: ghcr.io
-      username: ${{ secrets.GHCR_USERNAME }}
-      password: ${{ secrets.GHCR_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Build and push frontend image
-    run: |
-      docker build \
-        -t ghcr.io/zekq88/vingaard-frontend:${{ github.sha }} \
-        ./frontend/WebAppFrontend.Wasm
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
 
-      docker push ghcr.io/zekq88/vingaard-frontend:${{ github.sha }}
+      - name: Build and push frontend image
+        run: |
+          docker build \
+            -t ghcr.io/zekq88/vingaard-frontend:${{ github.sha }} \
+            ./frontend/WebAppFrontend.Wasm
 
-  - name: Build and push backend image
-    run: |
-      docker build \
-        -t ghcr.io/zekq88/vingaard-backend:${{ github.sha }} \
-        -f Dockerfile.backend .
+          docker push ghcr.io/zekq88/vingaard-frontend:${{ github.sha }}
 
-      docker push ghcr.io/zekq88/vingaard-backend:${{ github.sha }}
+      - name: Build and push backend image
+        run: |
+          docker build \
+            -t ghcr.io/zekq88/vingaard-backend:${{ github.sha }} \
+            -f Dockerfile.backend .
 
-  - name: Update Helm values
-    run: |
-      sed -i "s|image: ghcr.io/zekq88/vingaard-frontend:.*|image: ghcr.io/zekq88/vingaard-frontend:${{ github.sha }}|g" vingaard-chart/values.yaml
-      sed -i "s|image: ghcr.io/zekq88/vingaard-backend:.*|image: ghcr.io/zekq88/vingaard-backend:${{ github.sha }}|g" vingaard-chart/values.yaml
+          docker push ghcr.io/zekq88/vingaard-backend:${{ github.sha }}
 
-  - name: Commit updated Helm values
-    run: |
-      git config user.name "github-actions"
-      git config user.email "github-actions@github.com"
+      - name: Update Helm values
+        run: |
+          sed -i "s|image: ghcr.io/zekq88/vingaard-frontend:.*|image: ghcr.io/zekq88/vingaard-frontend:${{ github.sha }}|g" vingaard-chart/values.yaml
+          sed -i "s|image: ghcr.io/zekq88/vingaard-backend:.*|image: ghcr.io/zekq88/vingaard-backend:${{ github.sha }}|g" vingaard-chart/values.yaml
 
-      git add vingaard-chart/values.yaml
+      - name: Commit updated Helm values
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-      git commit -m "Update image tags to ${{ github.sha }}" || echo "No changes to commit"
+          git add vingaard-chart/values.yaml
 
-      git push
+          git commit -m "Update image tags to ${{ github.sha }}" || echo "No changes to commit"
+
+          git push
