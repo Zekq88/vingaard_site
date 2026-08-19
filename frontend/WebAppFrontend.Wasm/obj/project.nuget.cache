@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zBdtWdleyeE=",
+  "dgSpecHash": "MDsnF/DdDmQ=",
   "success": true,
-  "projectFilePath": "D:\\Programming\\portfolio\\human_horse_backend\\frontend\\WebAppFrontend.Wasm\\WebAppFrontend.Wasm.csproj",
+  "projectFilePath": "D:\\Programming\\vingaard_site\\frontend\\WebAppFrontend.Wasm\\WebAppFrontend.Wasm.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\titi_\\.nuget\\packages\\microsoft.aspnetcore.authorization\\9.0.11\\microsoft.aspnetcore.authorization.9.0.11.nupkg.sha512",
     "C:\\Users\\titi_\\.nuget\\packages\\microsoft.aspnetcore.components\\9.0.11\\microsoft.aspnetcore.components.9.0.11.nupkg.sha512",

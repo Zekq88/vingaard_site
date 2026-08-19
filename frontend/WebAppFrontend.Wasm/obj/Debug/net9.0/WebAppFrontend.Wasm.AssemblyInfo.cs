@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebAppFrontend.Wasm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a789549ab11c9343e9db84daf18846daaa48c62")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebAppFrontend.Wasm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebAppFrontend.Wasm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
